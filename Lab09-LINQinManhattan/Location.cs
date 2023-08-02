@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Lab09_LINQinManhattan
 {
-{
     public class Geometry
     {
         public string type { get; set; }

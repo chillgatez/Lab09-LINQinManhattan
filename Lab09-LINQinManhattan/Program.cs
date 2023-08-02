@@ -9,7 +9,7 @@ namespace Lab09_LINQinManhattan
     {
         public static void Main(string[] args)
         {
-            string json = File.ReadAllText("C:\\Users\\raygr\\Documents\\Dev\\labs\\Lab9Demo\\data.json");
+            string json = File.ReadAllText("C:\\Users\\Student-14\\source\\repos\\chillgatez\\Lab09-LINQinManhattan\\Lab09-LINQinManhattan\\data.json");
             Console.WriteLine("Read file into string");
 
             FeatureCollection featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json);
@@ -23,7 +23,41 @@ namespace Lab09_LINQinManhattan
 
 
         }
-        //Conner was here :D
+
+        public static void part3(Location[] items)
+        {
+            /*var neighborHoodQuery = from item in items
+                                    where !string.IsNullOrEmpty(item.properties.neighborhood)
+                                    group item by item.properties.neighborhood into grouped
+                                    select item;*/
+
+            var distinctQuery = (from item in items
+                                 where !string.IsNullOrEmpty(item.properties.neighborhood)
+                                 select item.properties.neighborhood).Distinct();
+            var distinctMethod = items
+                                .Where(item => !string.IsNullOrEmpty(item.properties.neighborhood))
+                                .Select(item => item.properties.neighborhood).Distinct();
+
+            foreach (string n in distinctMethod)
+            {
+                Console.WriteLine(n);
+            }
+
+        }
+
+        public static void Part2(Location[] items)
+        {
+            var neighborHoodQuery = from item in items
+                                    where item.properties.neighborhood != ""
+                                    //group item by item.properties.neighborhood into grouped 
+                                    select item;
+
+            foreach (var location in neighborHoodQuery)
+            {
+                Console.WriteLine(location.properties.neighborhood);
+            }
+        }
+
         public static void Part1(Location[] items)
         {
             Dictionary<string, int> locationAppearances = new Dictionary<string, int>();
