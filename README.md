@@ -21,7 +21,7 @@ The application reads location data from a JSON file, processes it using LINQ qu
 ![part3](https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(32).png?raw=true)
 
 **part5**
-![part5] (https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(34).png?raw=true)
+![part5](https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(34).png?raw=true)
 
 ## How to Use
 1. Clone the repository to your local machine.
