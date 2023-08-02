@@ -9,94 +9,101 @@ namespace Lab09_LINQinManhattan
     {
         public static void Main(string[] args)
         {
+            //Read file into string
             string json = File.ReadAllText("C:\\Users\\Student-14\\source\\repos\\chillgatez\\Lab09-LINQinManhattan\\Lab09-LINQinManhattan\\data.json");
-            Console.WriteLine("Read file into string");
 
+            //Deserialized the json data
             FeatureCollection featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json);
-            Console.WriteLine("Deserialized the json data");
 
             Location[] locations = featureCollection.features;
-            Console.WriteLine(locations);
-            Part1WithLINQ(locations);
 
+            // Question 1
+            Part1(locations);
 
+            // Question 2
+            Part2(locations);
 
+            // Question 3
+            Part3(locations);
 
+            // Question 4
+            Part4(locations);
+
+            // Question 5
+            Part5(locations);
         }
 
-        public static void part3(Location[] items)
+        // Question 5: Rewrite using opposing method (Method Syntax)
+        public static void Part5(Location[] items)
         {
-            /*var neighborHoodQuery = from item in items
-                                    where !string.IsNullOrEmpty(item.properties.neighborhood)
-                                    group item by item.properties.neighborhood into grouped
-                                    select item;*/
+            Console.WriteLine("Question 5 - Using Method Syntax:");
+            var neighborhoods = items.Where(item => !string.IsNullOrEmpty(item.properties.neighborhood))
+                                     .GroupBy(item => item.properties.neighborhood)
+                                     .Select(grouped => new { Key = grouped.Key, Value = grouped.Count() });
 
-            var distinctQuery = (from item in items
-                                 where !string.IsNullOrEmpty(item.properties.neighborhood)
-                                 select item.properties.neighborhood).Distinct();
-            var distinctMethod = items
-                                .Where(item => !string.IsNullOrEmpty(item.properties.neighborhood))
-                                .Select(item => item.properties.neighborhood).Distinct();
-
-            foreach (string n in distinctMethod)
+            foreach (var location in neighborhoods)
             {
-                Console.WriteLine(n);
+                Console.WriteLine($"{location.Key}: {location.Value}");
             }
-
+            Console.WriteLine($"Final Total: {neighborhoods.Count()} neighborhoods");
+            Console.WriteLine();
         }
 
+        // Question 4: Consolidate into a single query
+        public static void Part4(Location[] items)
+        {
+            Console.WriteLine("Question 4 - Single query:");
+            var neighborhoods = items.Select(item => item.properties.neighborhood)
+                                     .Where(neighborhood => !string.IsNullOrEmpty(neighborhood))
+                                     .Distinct();
+            foreach (var neighborhood in neighborhoods)
+            {
+                Console.WriteLine(neighborhood);
+            }
+            Console.WriteLine($"Final Total: {neighborhoods.Count()} neighborhoods");
+            Console.WriteLine();
+        }
+
+        // Question 3: Remove duplicates
+        public static void Part3(Location[] items)
+        {
+            Console.WriteLine("Question 3 - Remove duplicates:");
+            var neighborhoods = items.Where(item => !string.IsNullOrEmpty(item.properties.neighborhood))
+                                     .Select(item => item.properties.neighborhood)
+                                     .Distinct();
+            foreach (var neighborhood in neighborhoods)
+            {
+                Console.WriteLine(neighborhood);
+            }
+            Console.WriteLine($"Final Total: {neighborhoods.Count()} neighborhoods");
+            Console.WriteLine();
+        }
+
+        // Question 2: Filter out neighborhoods with no names
         public static void Part2(Location[] items)
         {
-            var neighborHoodQuery = from item in items
-                                    where item.properties.neighborhood != ""
-                                    //group item by item.properties.neighborhood into grouped 
-                                    select item;
-
-            foreach (var location in neighborHoodQuery)
+            Console.WriteLine("Question 2 - Filter neighborhoods with names:");
+            var neighborhoods = items.Where(item => !string.IsNullOrEmpty(item.properties.neighborhood))
+                                     .Select(item => item.properties.neighborhood);
+            foreach (var neighborhood in neighborhoods)
             {
-                Console.WriteLine(location.properties.neighborhood);
+                Console.WriteLine(neighborhood);
             }
+            Console.WriteLine($"Final Total: {neighborhoods.Count()} neighborhoods");
+            Console.WriteLine();
         }
 
+        // Question 1: Output all of the neighborhoods
         public static void Part1(Location[] items)
         {
-            Dictionary<string, int> locationAppearances = new Dictionary<string, int>();
-            for (int i = 0; i < items.Length; i++)
+            Console.WriteLine("Question 1 - Output all neighborhoods:");
+            var neighborhoods = items.Select(item => item.properties.neighborhood);
+            foreach (var neighborhood in neighborhoods)
             {
-                Location currentLocation = items[i];
-                string neighborhood = currentLocation.properties.neighborhood;
-                bool neighborhoodAlreadyInDictionary = locationAppearances.ContainsKey(neighborhood);
-                if (neighborhoodAlreadyInDictionary == false)
-                {
-                    locationAppearances.Add(neighborhood, 1);
-                }
-                else
-                {
-                    int currentValue = locationAppearances.GetValueOrDefault(neighborhood);
-                    int newValue = currentValue + 1;
-                    locationAppearances[neighborhood] = newValue;
-
-                }
+                Console.WriteLine(neighborhood);
             }
-
-            foreach (var location in locationAppearances)
-            {
-                Console.WriteLine($"{location.Key}: {location.Value}");
-            }
-
+            Console.WriteLine($"Final Total: {neighborhoods.Count()} neighborhoods");
+            Console.WriteLine();
         }
-
-        public static void Part1WithLINQ(Location[] items)
-        {
-            var neighborHoodQuery = from item in items
-                                    group item by item.properties.neighborhood into grouped
-                                    select new { Key = grouped.Key, Value = grouped.Count() };
-
-            foreach (var location in neighborHoodQuery)
-            {
-                Console.WriteLine($"{location.Key}: {location.Value}");
-            }
-        }
-
     }
 }
