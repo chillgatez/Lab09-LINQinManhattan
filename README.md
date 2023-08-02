@@ -11,7 +11,17 @@ The application reads location data from a JSON file, processes it using LINQ qu
 1. Rewrite at least one of these questions using the opposing LINQ method (method syntax instead of query syntax or vice versa).
 
 ## Visuals
+**part1**
+![part1](https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(30).png?raw=true)
 
+**part2**
+![part2](https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(31).png?raw=true)
+
+**part3/4**
+![part3](https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(32).png?raw=true)
+
+**part5**
+![part5] (https://github.com/chillgatez/Lab09-LINQinManhattan/blob/Kelsee-Lab09/Screenshot%20(34).png?raw=true)
 
 ## How to Use
 1. Clone the repository to your local machine.
